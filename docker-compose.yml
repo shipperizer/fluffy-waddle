@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  server:
+    image: shipperizer/fluffy-waddle:latest
+    build: .
+    command: make server
+    restart: always
+
+  client:
+    image: shipperizer/fluffy-waddle:latest
+    build: .
+    command: make client
+    environment:
+      - SERVER_HOST=server
+    depends_on:
+      - server
+    links:
+      - server:server
+    restart: always  
